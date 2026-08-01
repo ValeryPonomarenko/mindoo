@@ -1,0 +1,13 @@
+
+# FVM Version Cache
+.fvm/
+
+# IDE and Dart tooling
+.dart_tool/
+.idea/
+*.iml
+
+# Build artifacts
+build/
+coverage/
+.DS_Store

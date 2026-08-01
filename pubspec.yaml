@@ -1,0 +1,40 @@
+name: mindoo_workspace
+description: Mindoo's Flutter workspace.
+publish_to: none
+
+environment:
+  sdk: ^3.12.2
+
+workspace:
+  - apps/mobile
+  - apps/desktop
+  - packages/core
+  - packages/design_system
+
+dev_dependencies:
+  melos: ^7.4.0
+
+melos:
+  scripts:
+    analyze:
+      run: fvm dart run melos exec -- "fvm flutter analyze"
+      description: Analyze every Flutter package and app.
+    test:
+      run: fvm dart run melos exec -- "fvm flutter test"
+      description: Run every package and app test suite.
+    format:
+      run: dart format . --set-exit-if-changed
+      description: Check Dart formatting across the workspace.
+    format:fix:
+      run: dart format .
+      description: Apply Dart formatting across the workspace.
+    run:mobile:
+      run: fvm flutter run
+      packageFilters:
+        scope: mobile
+      description: Run the mobile app.
+    run:desktop:
+      run: fvm flutter run
+      packageFilters:
+        scope: desktop
+      description: Run the desktop app.
