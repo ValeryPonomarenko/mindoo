@@ -1,34 +1,36 @@
+import 'package:design_system/design_system.dart';
+
 import 'note_editor_initial_params.dart';
 
 abstract class NoteEditorViewState {
   String get title;
-  String get documentJson;
+  RichTextDocument? get document;
 }
 
 class NoteEditorPresentationViewState implements NoteEditorViewState {
   const NoteEditorPresentationViewState._({
     required this.title,
-    required this.documentJson,
+    required this.document,
   });
 
   factory NoteEditorPresentationViewState.initial(
     NoteEditorInitialParams initialParams,
   ) => NoteEditorPresentationViewState._(
     title: initialParams.title,
-    documentJson: initialParams.documentJson,
+    document: initialParams.document,
   );
 
   @override
   final String title;
 
   @override
-  final String documentJson;
+  final RichTextDocument? document;
 
   NoteEditorPresentationViewState copyWith({
     String? title,
-    String? documentJson,
+    RichTextDocument? document,
   }) => NoteEditorPresentationViewState._(
     title: title ?? this.title,
-    documentJson: documentJson ?? this.documentJson,
+    document: document ?? this.document,
   );
 }

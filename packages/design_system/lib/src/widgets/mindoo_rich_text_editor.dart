@@ -1,23 +1,23 @@
 import 'dart:convert';
 
+import 'package:design_system/src/configs/mindoo_quill_toolbar_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
-import '../configs/mindoo_quill_toolbar_config.dart';
+part 'package:design_system/src/models/rich_text_document.dart';
 
-/// A reusable rich-text editor that persists a Quill document as Delta JSON.
+/// A reusable rich-text editor that emits an opaque, serializable document value.
 class MindooRichTextEditor extends StatefulWidget {
   const MindooRichTextEditor({
     super.key,
-    required this.initialDocumentJson,
+    required this.initialDocument,
     required this.onDocumentChanged,
     this.readOnly = false,
   });
 
-  /// A JSON-encoded Quill Delta. An empty string creates a new document.
-  final String initialDocumentJson;
+  final RichTextDocument? initialDocument;
 
-  final ValueChanged<String> onDocumentChanged;
+  final ValueChanged<RichTextDocument> onDocumentChanged;
   final bool readOnly;
 
   @override
@@ -33,7 +33,7 @@ class _MindooRichTextEditorState extends State<MindooRichTextEditor> {
   void initState() {
     super.initState();
     _controller = QuillController(
-      document: _documentFromJson(widget.initialDocumentJson),
+      document: widget.initialDocument?._document ?? Document(),
       selection: const TextSelection.collapsed(offset: 0),
       readOnly: widget.readOnly,
     );
@@ -67,15 +67,5 @@ class _MindooRichTextEditorState extends State<MindooRichTextEditor> {
     ],
   );
 
-  void _onDocumentChanged() => widget.onDocumentChanged(jsonEncode(_controller.document.toDelta()));
-
-  Document _documentFromJson(String documentJson) {
-    if (documentJson.isEmpty) return Document();
-
-    try {
-      return Document.fromJson(jsonDecode(documentJson));
-    } on FormatException {
-      return Document();
-    }
-  }
+  void _onDocumentChanged() => widget.onDocumentChanged(RichTextDocument._(_controller.document));
 }

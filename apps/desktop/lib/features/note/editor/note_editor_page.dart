@@ -53,7 +53,7 @@ class _NoteEditorPageState extends State<NoteEditorPage>
                 Expanded(
                   child: MindooRichTextEditor(
                     key: ValueKey(widget.initialParams.noteId),
-                    initialDocumentJson: state.documentJson,
+                    initialDocument: state.document,
                     onDocumentChanged: viewModel.onDocumentChanged,
                   ),
                 ),
