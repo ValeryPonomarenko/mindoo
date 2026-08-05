@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Mindoo Mobile (Debug)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "apps/mobile",
+      "program": "lib/main.dart"
+    },
+    {
+      "name": "Mindoo Desktop (Debug)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "apps/desktop",
+      "program": "lib/main.dart"
+    }
+  ]
+}

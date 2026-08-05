@@ -1,36 +1,22 @@
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-void main() => runApp(const MindooMobileApp());
+import 'dependency_injection/app_component.dart';
+
+void main() {
+  configureDependencies();
+  runApp(const MindooMobileApp());
+}
 
 class MindooMobileApp extends StatelessWidget {
   const MindooMobileApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) => MaterialApp.router(
     title: MindooAppInfo.name,
     theme: MindooTheme.mobile(),
-    home: const _MobileHome(),
-  );
-}
-
-class _MobileHome extends StatelessWidget {
-  const _MobileHome();
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Mindoo')),
-    body: const Center(child: Text('Mobile experience')),
-    bottomNavigationBar: NavigationBar(
-      destinations: [
-        NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Home'),
-        NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
-        NavigationDestination(
-          icon: Icon(Icons.person_outline),
-          label: 'Profile',
-        ),
-      ],
-    ),
+    routerConfig: getIt<GoRouter>(),
   );
 }
