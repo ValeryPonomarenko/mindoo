@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   core: ^0.0.1
   design_system: ^0.0.1
+  flutter_quill: ^11.5.1
   go_router: ^17.3.0
 
 dev_dependencies:

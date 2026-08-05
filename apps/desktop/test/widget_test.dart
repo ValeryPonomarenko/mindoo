@@ -15,4 +15,13 @@ void main() {
 
     expect(find.text('Desktop workspace'), findsOneWidget);
   });
+
+  testWidgets('opens the note editor', (tester) async {
+    await tester.pumpWidget(const MindooDesktopApp());
+
+    await tester.tap(find.text('New note'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Note editor'), findsOneWidget);
+  });
 }

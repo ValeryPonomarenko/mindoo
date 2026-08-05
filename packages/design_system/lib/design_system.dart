@@ -1,5 +1,7 @@
 library;
 
+export 'src/widgets/mindoo_rich_text_editor.dart';
+
 import 'package:flutter/material.dart';
 
 /// Shared visual foundations. Each app may compose this with its own UX rules.

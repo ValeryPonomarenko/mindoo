@@ -1,0 +1,33 @@
+import 'package:flutter_quill/flutter_quill.dart';
+
+/// Formatting controls available in Mindoo's rich-text editor.
+const mindooQuillToolbarConfig = QuillSimpleToolbarConfig(
+  showHeaderStyle: true,
+  showFontFamily: false,
+  showFontSize: false,
+  showBoldButton: true,
+  showItalicButton: true,
+  showUnderLineButton: true,
+  showStrikeThrough: true,
+  showColorButton: false,
+  showBackgroundColorButton: true,
+  showListNumbers: true,
+  showListBullets: true,
+  showListCheck: true,
+  showQuote: true,
+  showLink: true,
+  showUndo: false,
+  showRedo: false,
+  showSmallButton: false,
+  showLineHeightButton: false,
+  showInlineCode: false,
+  showClearFormat: false,
+  showAlignmentButtons: false,
+  showCodeBlock: false,
+  showIndent: false,
+  showDirection: false,
+  showSearchButton: false,
+  showSubscript: false,
+  showSuperscript: false,
+  multiRowsDisplay: true,
+);

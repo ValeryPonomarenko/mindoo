@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'home_initial_params.dart';
 import 'home_presentation_view_state.dart';
@@ -26,6 +27,11 @@ class _HomePageState extends State<HomePage>
         const Text('Desktop workspace'),
         Text(state.greeting),
         Text('Refreshed ${state.refreshCount} times'),
+        OutlinedButton.icon(
+          onPressed: () => context.push('/note/editor'),
+          icon: const Icon(Icons.note_add_outlined),
+          label: const Text('New note'),
+        ),
         FilledButton.icon(
           onPressed: viewModel.onTapRefresh,
           icon: const Icon(Icons.refresh),

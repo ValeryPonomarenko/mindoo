@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/home/dependency_injection/feature_component.dart' as home;
+import '../features/note/dependency_injection/feature_component.dart' as note;
 import '../router.dart';
 
 /// Registers the mobile app graph and installs its feature components.
@@ -10,4 +11,5 @@ void configureDependencies() {
 
   getIt.registerLazySingleton<GoRouter>(createMobileRouter);
   home.configureDependencies();
+  note.configureDependencies();
 }

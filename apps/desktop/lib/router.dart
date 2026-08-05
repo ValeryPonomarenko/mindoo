@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import 'features/home/home_initial_params.dart';
 import 'features/home/home_page.dart';
+import 'features/note/editor/note_editor_initial_params.dart';
+import 'features/note/editor/note_editor_page.dart';
 
 GoRouter createDesktopRouter() => GoRouter(
   routes: [
@@ -27,6 +29,14 @@ GoRouter createDesktopRouter() => GoRouter(
       path: '/settings',
       pageBuilder: (context, state) => const NoTransitionPage(
         child: _DesktopPage(body: Text('Settings'), selectedIndex: 2),
+      ),
+    ),
+    GoRoute(
+      path: '/note/editor',
+      pageBuilder: (context, state) => NoTransitionPage(
+        child: NoteEditorPage(
+          initialParams: NoteEditorInitialParams.fromRouteExtra(state.extra),
+        ),
       ),
     ),
   ],

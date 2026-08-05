@@ -15,4 +15,13 @@ void main() {
 
     expect(find.text('Mobile experience'), findsOneWidget);
   });
+
+  testWidgets('opens the note editor', (tester) async {
+    await tester.pumpWidget(const MindooMobileApp());
+
+    await tester.tap(find.text('New note'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Note editor'), findsOneWidget);
+  });
 }
