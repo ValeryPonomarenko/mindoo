@@ -55,17 +55,24 @@ class _MindooRichTextEditorState extends State<MindooRichTextEditor> {
   @override
   Widget build(BuildContext context) => Column(
     children: [
-      if (!widget.readOnly) QuillSimpleToolbar(controller: _controller, config: mindooQuillToolbarConfig),
+      if (!widget.readOnly)
+        QuillSimpleToolbar(
+          controller: _controller,
+          config: mindooQuillToolbarConfig,
+        ),
       Expanded(
         child: QuillEditor.basic(
           controller: _controller,
           focusNode: _focusNode,
           scrollController: _scrollController,
-          config: QuillEditorConfig(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12)),
+          config: QuillEditorConfig(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          ),
         ),
       ),
     ],
   );
 
-  void _onDocumentChanged() => widget.onDocumentChanged(RichTextDocument._(_controller.document));
+  void _onDocumentChanged() =>
+      widget.onDocumentChanged(RichTextDocument._(_controller.document));
 }

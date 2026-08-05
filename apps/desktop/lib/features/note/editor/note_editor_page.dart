@@ -27,40 +27,48 @@ class _NoteEditorPageState extends State<NoteEditorPage>
   @override
   Widget build(BuildContext context) => stateObserver(
     builder: (context, state) => Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          tooltip: 'Close editor',
-          onPressed: context.pop,
-          icon: const Icon(Icons.close),
-        ),
-        title: const Text('Note editor'),
-      ),
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 920),
-            child: Column(
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Theme.of(context).colorScheme.outlineVariant,
+                ),
+              ),
+            ),
+            child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+                IconButton(
+                  tooltip: 'Back',
+                  onPressed: context.pop,
+                  icon: const Icon(Icons.arrow_back),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
                   child: TextFormField(
                     initialValue: state.title,
                     onChanged: viewModel.onTitleChanged,
-                    decoration: const InputDecoration(labelText: 'Title'),
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Untitled note',
+                    ),
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
-                Expanded(
-                  child: MindooRichTextEditor(
-                    key: ValueKey(widget.initialParams.noteId),
-                    initialDocument: state.document,
-                    onDocumentChanged: viewModel.onDocumentChanged,
-                  ),
-                ),
+                const MindooIndexStatus(),
               ],
             ),
           ),
-        ),
+          Expanded(
+            child: MindooRichTextEditor(
+              key: ValueKey(widget.initialParams.noteId),
+              initialDocument: state.document,
+              onDocumentChanged: viewModel.onDocumentChanged,
+            ),
+          ),
+        ],
       ),
     ),
   );

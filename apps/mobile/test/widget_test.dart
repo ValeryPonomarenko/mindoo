@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -13,13 +14,13 @@ void main() {
   testWidgets('renders the mobile experience', (tester) async {
     await tester.pumpWidget(const MindooMobileApp());
 
-    expect(find.text('Mobile experience'), findsOneWidget);
+    expect(find.text('Project notes'), findsOneWidget);
   });
 
   testWidgets('opens the note editor', (tester) async {
     await tester.pumpWidget(const MindooMobileApp());
 
-    await tester.tap(find.text('New note'));
+    await tester.tap(find.byIcon(Icons.add));
     await tester.pumpAndSettle();
 
     expect(find.text('Note editor'), findsOneWidget);

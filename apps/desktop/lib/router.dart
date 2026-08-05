@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:design_system/design_system.dart';
 import 'package:go_router/go_router.dart';
 
 import 'features/home/home_initial_params.dart';
@@ -20,22 +21,25 @@ GoRouter createDesktopRouter() => GoRouter(
       ),
     ),
     GoRoute(
-      path: '/workspace',
+      path: '/search',
       pageBuilder: (context, state) => const NoTransitionPage(
-        child: _DesktopPage(body: Text('Workspace'), selectedIndex: 1),
+        child: _DesktopPage(body: _SearchPage(), selectedIndex: 1),
       ),
     ),
     GoRoute(
       path: '/settings',
       pageBuilder: (context, state) => const NoTransitionPage(
-        child: _DesktopPage(body: Text('Settings'), selectedIndex: 2),
+        child: _DesktopPage(body: _SettingsPage(), selectedIndex: 2),
       ),
     ),
     GoRoute(
       path: '/note/editor',
       pageBuilder: (context, state) => NoTransitionPage(
-        child: NoteEditorPage(
-          initialParams: NoteEditorInitialParams.fromRouteExtra(state.extra),
+        child: _DesktopPage(
+          selectedIndex: 0,
+          body: NoteEditorPage(
+            initialParams: NoteEditorInitialParams.fromRouteExtra(state.extra),
+          ),
         ),
       ),
     ),
@@ -53,11 +57,25 @@ class _DesktopPage extends StatelessWidget {
     body: Row(
       children: [
         NavigationRail(
+          minWidth: 96,
+          backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
           selectedIndex: selectedIndex,
           labelType: NavigationRailLabelType.all,
+          groupAlignment: 1,
+          leading: const Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                MindooWorkspaceAvatar(name: 'Work', selected: true),
+                SizedBox(height: 12),
+                MindooWorkspaceAvatar(name: 'Study'),
+              ],
+            ),
+          ),
           onDestinationSelected: (index) => context.go(switch (index) {
             0 => '/',
-            1 => '/workspace',
+            1 => '/search',
             _ => '/settings',
           }),
           destinations: const [
@@ -66,8 +84,8 @@ class _DesktopPage extends StatelessWidget {
               label: Text('Home'),
             ),
             NavigationRailDestination(
-              icon: Icon(Icons.folder_outlined),
-              label: Text('Workspace'),
+              icon: Icon(Icons.search_outlined),
+              label: Text('Search'),
             ),
             NavigationRailDestination(
               icon: Icon(Icons.settings_outlined),
@@ -76,8 +94,40 @@ class _DesktopPage extends StatelessWidget {
           ],
         ),
         const VerticalDivider(width: 1),
-        Expanded(child: Center(child: body)),
+        Expanded(child: body),
       ],
     ),
+  );
+}
+
+class _SearchPage extends StatelessWidget {
+  const _SearchPage();
+  @override
+  Widget build(BuildContext context) => ListView(
+    padding: const EdgeInsets.fromLTRB(40, 52, 40, 40),
+    children: const [
+      MindooSearchField(autofocus: true),
+      SizedBox(height: 28),
+      Text('Recent notes'),
+    ],
+  );
+}
+
+class _SettingsPage extends StatelessWidget {
+  const _SettingsPage();
+  @override
+  Widget build(BuildContext context) => ListView(
+    padding: const EdgeInsets.fromLTRB(40, 32, 40, 40),
+    children: [
+      Text('Settings', style: Theme.of(context).textTheme.headlineSmall),
+      const SizedBox(height: 24),
+      const Text('Agent workspace access'),
+      const SizedBox(height: 8),
+      const Text(
+        'Choose which workspaces the agent and connected tools can read.',
+      ),
+      const SizedBox(height: 16),
+      const SwitchListTile(value: true, onChanged: null, title: Text('Work')),
+    ],
   );
 }

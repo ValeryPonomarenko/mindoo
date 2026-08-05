@@ -15,11 +15,26 @@ class MindooMobileApp extends StatelessWidget {
   const MindooMobileApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp.router(
-    title: MindooAppInfo.name,
-    theme: MindooTheme.mobile(),
-    routerConfig: getIt<GoRouter>(),
-    localizationsDelegates: FlutterQuillLocalizations.localizationsDelegates,
-    supportedLocales: FlutterQuillLocalizations.supportedLocales,
-  );
+  Widget build(BuildContext context) {
+    final workspaceTheme = getIt<MindooWorkspaceThemeController>();
+    return AnimatedBuilder(
+      animation: workspaceTheme,
+      builder: (context, _) {
+        final theme = MindooTheme.mobile(seedColor: workspaceTheme.seedColor);
+        return MaterialApp.router(
+          title: MindooAppInfo.name,
+          theme: theme,
+          routerConfig: getIt<GoRouter>(),
+          localizationsDelegates:
+              FlutterQuillLocalizations.localizationsDelegates,
+          supportedLocales: FlutterQuillLocalizations.supportedLocales,
+          builder: (context, child) => MindooWorkspaceTheme(
+            seedColor: workspaceTheme.seedColor,
+            theme: theme,
+            child: child ?? const SizedBox.shrink(),
+          ),
+        );
+      },
+    );
+  }
 }
