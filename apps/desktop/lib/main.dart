@@ -11,30 +11,48 @@ void main() {
   runApp(const MindooDesktopApp());
 }
 
-class MindooDesktopApp extends StatelessWidget {
+class MindooDesktopApp extends StatefulWidget {
   const MindooDesktopApp({super.key});
 
   @override
+  State<MindooDesktopApp> createState() => _MindooDesktopAppState();
+}
+
+class _MindooDesktopAppState extends State<MindooDesktopApp> {
+  final _workspaceTheme = MindooWorkspaceThemeController(
+    initialSeedColor: const Color(0xFF006E5A),
+  );
+
+  @override
+  void dispose() {
+    _workspaceTheme.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final workspaceTheme = getIt<MindooWorkspaceThemeController>();
-    return AnimatedBuilder(
-      animation: workspaceTheme,
-      builder: (context, _) {
-        final theme = MindooTheme.desktop(seedColor: workspaceTheme.seedColor);
-        return MaterialApp.router(
-          title: MindooAppInfo.name,
-          theme: theme,
-          routerConfig: getIt<GoRouter>(),
-          localizationsDelegates:
-              FlutterQuillLocalizations.localizationsDelegates,
-          supportedLocales: FlutterQuillLocalizations.supportedLocales,
-          builder: (context, child) => MindooWorkspaceTheme(
-            seedColor: workspaceTheme.seedColor,
+    return MindooWorkspaceThemeControllerProvider(
+      controller: _workspaceTheme,
+      child: AnimatedBuilder(
+        animation: _workspaceTheme,
+        builder: (context, _) {
+          final theme = MindooTheme.desktop(
+            seedColor: _workspaceTheme.seedColor,
+          );
+          return MaterialApp.router(
+            title: MindooAppInfo.name,
             theme: theme,
-            child: child ?? const SizedBox.shrink(),
-          ),
-        );
-      },
+            routerConfig: getIt<GoRouter>(),
+            localizationsDelegates: FlutterQuillLocalizations.localizationsDelegates,
+            supportedLocales: FlutterQuillLocalizations.supportedLocales,
+            builder: (context, child) => MindooWorkspaceTheme(
+              seedColor: _workspaceTheme.seedColor,
+              theme: theme,
+              child: child ?? const SizedBox.shrink(),
+            ),
+          );
+        },
+      ),
     );
   }
 }

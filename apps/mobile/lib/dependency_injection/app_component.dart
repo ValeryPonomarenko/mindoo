@@ -1,6 +1,4 @@
 import 'package:core/core.dart';
-import 'package:design_system/design_system.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/home/dependency_injection/feature_component.dart' as home;
@@ -11,11 +9,6 @@ import '../router.dart';
 void configureDependencies() {
   if (getIt.isRegistered<GoRouter>()) return;
 
-  getIt.registerLazySingleton(
-    () => MindooWorkspaceThemeController(
-      initialSeedColor: const Color(0xFF5B4BDB),
-    ),
-  );
   getIt.registerLazySingleton<GoRouter>(createMobileRouter);
   home.configureDependencies();
   note.configureDependencies();

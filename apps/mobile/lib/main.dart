@@ -11,30 +11,48 @@ void main() {
   runApp(const MindooMobileApp());
 }
 
-class MindooMobileApp extends StatelessWidget {
+class MindooMobileApp extends StatefulWidget {
   const MindooMobileApp({super.key});
 
   @override
+  State<MindooMobileApp> createState() => _MindooMobileAppState();
+}
+
+class _MindooMobileAppState extends State<MindooMobileApp> {
+  final _workspaceTheme = MindooWorkspaceThemeController(
+    initialSeedColor: const Color(0xFF5B4BDB),
+  );
+
+  @override
+  void dispose() {
+    _workspaceTheme.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final workspaceTheme = getIt<MindooWorkspaceThemeController>();
-    return AnimatedBuilder(
-      animation: workspaceTheme,
-      builder: (context, _) {
-        final theme = MindooTheme.mobile(seedColor: workspaceTheme.seedColor);
-        return MaterialApp.router(
-          title: MindooAppInfo.name,
-          theme: theme,
-          routerConfig: getIt<GoRouter>(),
-          localizationsDelegates:
-              FlutterQuillLocalizations.localizationsDelegates,
-          supportedLocales: FlutterQuillLocalizations.supportedLocales,
-          builder: (context, child) => MindooWorkspaceTheme(
-            seedColor: workspaceTheme.seedColor,
+    return MindooWorkspaceThemeControllerProvider(
+      controller: _workspaceTheme,
+      child: AnimatedBuilder(
+        animation: _workspaceTheme,
+        builder: (context, _) {
+          final theme = MindooTheme.mobile(
+            seedColor: _workspaceTheme.seedColor,
+          );
+          return MaterialApp.router(
+            title: MindooAppInfo.name,
             theme: theme,
-            child: child ?? const SizedBox.shrink(),
-          ),
-        );
-      },
+            routerConfig: getIt<GoRouter>(),
+            localizationsDelegates: FlutterQuillLocalizations.localizationsDelegates,
+            supportedLocales: FlutterQuillLocalizations.supportedLocales,
+            builder: (context, child) => MindooWorkspaceTheme(
+              seedColor: _workspaceTheme.seedColor,
+              theme: theme,
+              child: child ?? const SizedBox.shrink(),
+            ),
+          );
+        },
+      ),
     );
   }
 }

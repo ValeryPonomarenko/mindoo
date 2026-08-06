@@ -11,11 +11,52 @@ class MindooWorkspaceThemeController extends ChangeNotifier {
 
   Color get seedColor => _seedColor;
 
+  static MindooWorkspaceThemeController of(BuildContext context) =>
+      _MindooWorkspaceThemeControllerScope.of(context);
+
   void setSeedColor(Color color) {
     if (_seedColor == color) return;
     _seedColor = color;
     notifyListeners();
   }
+}
+
+class _MindooWorkspaceThemeControllerScope
+    extends InheritedNotifier<MindooWorkspaceThemeController> {
+  const _MindooWorkspaceThemeControllerScope({
+    required MindooWorkspaceThemeController controller,
+    required super.child,
+  }) : super(notifier: controller);
+
+  static MindooWorkspaceThemeController of(BuildContext context) {
+    final scope = context
+        .dependOnInheritedWidgetOfExactType<
+          _MindooWorkspaceThemeControllerScope
+        >();
+    assert(
+      scope?.notifier != null,
+      'MindooWorkspaceThemeController is missing from the widget tree.',
+    );
+    return scope!.notifier!;
+  }
+}
+
+/// Exposes [MindooWorkspaceThemeController] to descendants.
+class MindooWorkspaceThemeControllerProvider extends StatelessWidget {
+  const MindooWorkspaceThemeControllerProvider({
+    super.key,
+    required this.controller,
+    required this.child,
+  });
+
+  final MindooWorkspaceThemeController controller;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => _MindooWorkspaceThemeControllerScope(
+    controller: controller,
+    child: child,
+  );
 }
 
 /// Makes the active workspace's Material theme available below this point.
