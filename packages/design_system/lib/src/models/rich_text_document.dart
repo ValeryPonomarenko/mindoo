@@ -10,4 +10,7 @@ class RichTextDocument {
 
   /// Encodes this document for storage or transport.
   String toJson() => jsonEncode(_document.toDelta().toJson());
+
+  /// Plain text suitable for search indexing and embedding models.
+  String get plainText => _document.toPlainText();
 }

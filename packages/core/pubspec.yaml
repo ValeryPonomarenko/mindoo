@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^9.1.1
   get_it: ^9.2.1
+  text_embedding: ^0.0.1
 
 dev_dependencies:
   flutter_lints: ^6.0.0

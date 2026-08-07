@@ -6,6 +6,8 @@ import 'features/home/home_initial_params.dart';
 import 'features/home/home_page.dart';
 import 'features/note/editor/note_editor_initial_params.dart';
 import 'features/note/editor/note_editor_page.dart';
+import 'features/settings/settings_initial_params.dart';
+import 'features/settings/settings_page.dart';
 
 GoRouter createDesktopRouter() => GoRouter(
   routes: [
@@ -28,8 +30,13 @@ GoRouter createDesktopRouter() => GoRouter(
     ),
     GoRoute(
       path: '/settings',
-      pageBuilder: (context, state) => const NoTransitionPage(
-        child: _DesktopPage(body: _SettingsPage(), selectedIndex: 2),
+      pageBuilder: (context, state) => NoTransitionPage(
+        child: _DesktopPage(
+          body: SettingsPage(
+            initialParams: SettingsInitialParams.fromRouteExtra(state.extra),
+          ),
+          selectedIndex: 2,
+        ),
       ),
     ),
     GoRoute(
@@ -109,25 +116,6 @@ class _SearchPage extends StatelessWidget {
       MindooSearchField(autofocus: true),
       SizedBox(height: 28),
       Text('Recent notes'),
-    ],
-  );
-}
-
-class _SettingsPage extends StatelessWidget {
-  const _SettingsPage();
-  @override
-  Widget build(BuildContext context) => ListView(
-    padding: const EdgeInsets.fromLTRB(40, 32, 40, 40),
-    children: [
-      Text('Settings', style: Theme.of(context).textTheme.headlineSmall),
-      const SizedBox(height: 24),
-      const Text('Agent workspace access'),
-      const SizedBox(height: 8),
-      const Text(
-        'Choose which workspaces the agent and connected tools can read.',
-      ),
-      const SizedBox(height: 16),
-      const SwitchListTile(value: true, onChanged: null, title: Text('Work')),
     ],
   );
 }

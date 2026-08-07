@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +28,29 @@ abstract class AppCubit<S> extends Cubit<S> {
   Future<void> close() {
     onClose();
     return super.close();
+  }
+}
+
+/// Cancels subscriptions owned by a ViewModel when the ViewModel closes.
+mixin SubscriptionsMixin<S> on AppCubit<S> {
+  final _subscriptions = <StreamSubscription<dynamic>>[];
+
+  void operator <<(StreamSubscription<dynamic> subscription) {
+    _subscriptions.add(subscription);
+  }
+
+  @override
+  Future<void> close() async {
+    final subscriptions = List<StreamSubscription<dynamic>>.of(_subscriptions);
+    _subscriptions.clear();
+
+    try {
+      await Future.wait(
+        subscriptions.map((subscription) => subscription.cancel()),
+      );
+    } finally {
+      await super.close();
+    }
   }
 }
 

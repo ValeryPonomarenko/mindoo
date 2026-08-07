@@ -1,0 +1,11 @@
+name: text_embedding
+description: Platform-independent contracts for chunking text and creating embeddings.
+version: 0.0.1
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+
+dev_dependencies:
+  test: ^1.25.0
+  lints: ^6.0.0

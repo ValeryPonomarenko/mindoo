@@ -10,6 +10,8 @@ workspace:
   - apps/desktop
   - packages/core
   - packages/design_system
+  - packages/text_embedding
+  - packages/text_embedding_desktop
 
 dev_dependencies:
   melos: ^7.4.0

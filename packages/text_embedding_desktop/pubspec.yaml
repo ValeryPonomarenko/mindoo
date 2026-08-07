@@ -1,0 +1,22 @@
+name: text_embedding_desktop
+description: Desktop ONNX Runtime implementation of Mindoo text embeddings.
+version: 0.0.1
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  crypto: ^3.0.7
+  flutter:
+    sdk: flutter
+  flutter_onnxruntime: ^1.8.3
+  hf_tokenizers: ^1.0.0
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  text_embedding: ^0.0.1
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter

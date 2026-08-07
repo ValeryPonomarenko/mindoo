@@ -20,6 +20,11 @@ void configureDependencies() {
       NoteEditorInitialParams,
       dynamic
     >(
-      (initialParams, _) => NoteEditorViewModel(getIt(param1: initialParams)),
+      (initialParams, _) => NoteEditorViewModel(
+        getIt(param1: initialParams),
+        initialParams,
+        getIt<EmbeddingModelController>(),
+        getIt<TextEmbeddingPipeline>(),
+      ),
     );
 }

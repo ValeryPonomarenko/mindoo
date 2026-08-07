@@ -3,6 +3,7 @@ library;
 
 export 'src/dependency_injection/get_it.dart';
 export 'src/presentation/mvvm_extensions.dart';
+export 'package:text_embedding/text_embedding.dart';
 
 /// Basic metadata available to every Mindoo client.
 class MindooAppInfo {
