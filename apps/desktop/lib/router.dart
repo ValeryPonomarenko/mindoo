@@ -8,6 +8,8 @@ import 'features/note/editor/note_editor_initial_params.dart';
 import 'features/note/editor/note_editor_page.dart';
 import 'features/settings/settings_initial_params.dart';
 import 'features/settings/settings_page.dart';
+import 'features/search/search_initial_params.dart';
+import 'features/search/search_page.dart';
 
 GoRouter createDesktopRouter() => GoRouter(
   routes: [
@@ -24,8 +26,13 @@ GoRouter createDesktopRouter() => GoRouter(
     ),
     GoRoute(
       path: '/search',
-      pageBuilder: (context, state) => const NoTransitionPage(
-        child: _DesktopPage(body: _SearchPage(), selectedIndex: 1),
+      pageBuilder: (context, state) => NoTransitionPage(
+        child: _DesktopPage(
+          body: SearchPage(
+            initialParams: SearchInitialParams.fromRouteExtra(state.extra),
+          ),
+          selectedIndex: 1,
+        ),
       ),
     ),
     GoRoute(
@@ -104,18 +111,5 @@ class _DesktopPage extends StatelessWidget {
         Expanded(child: body),
       ],
     ),
-  );
-}
-
-class _SearchPage extends StatelessWidget {
-  const _SearchPage();
-  @override
-  Widget build(BuildContext context) => ListView(
-    padding: const EdgeInsets.fromLTRB(40, 52, 40, 40),
-    children: const [
-      MindooSearchField(autofocus: true),
-      SizedBox(height: 28),
-      Text('Recent notes'),
-    ],
   );
 }

@@ -1,7 +1,7 @@
 import '../chunkers/text_chunker.dart';
-import '../chunking_options.dart';
-import '../embedding.dart';
-import '../embedding_document.dart';
+import '../models/chunking_options.dart';
+import '../models/embedding.dart';
+import '../models/embedding_document.dart';
 import '../text_embedder.dart';
 import 'embedded_chunk.dart';
 

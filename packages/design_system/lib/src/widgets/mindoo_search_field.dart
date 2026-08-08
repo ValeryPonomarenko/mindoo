@@ -6,11 +6,13 @@ class MindooSearchField extends StatelessWidget {
     this.onTap,
     this.onChanged,
     this.autofocus = false,
+    this.trailing,
   });
 
   final VoidCallback? onTap;
   final ValueChanged<String>? onChanged;
   final bool autofocus;
+  final List<Widget>? trailing;
 
   @override
   Widget build(BuildContext context) => SearchBar(
@@ -19,5 +21,6 @@ class MindooSearchField extends StatelessWidget {
     onTap: onTap,
     onChanged: onChanged,
     autoFocus: autofocus,
+    trailing: trailing,
   );
 }

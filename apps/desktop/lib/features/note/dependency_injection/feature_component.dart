@@ -22,9 +22,8 @@ void configureDependencies() {
     >(
       (initialParams, _) => NoteEditorViewModel(
         getIt(param1: initialParams),
-        initialParams,
-        getIt<EmbeddingModelController>(),
-        getIt<TextEmbeddingPipeline>(),
+        getIt(),
+        getIt(),
       ),
     );
 }

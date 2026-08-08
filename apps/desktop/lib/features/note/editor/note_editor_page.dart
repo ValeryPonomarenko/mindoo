@@ -57,18 +57,12 @@ class _NoteEditorPageState extends State<NoteEditorPage>
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
-                IconButton(
-                  tooltip: 'Temporary: print embedding',
-                  onPressed: viewModel.printEmbedding,
-                  icon: const Icon(Icons.data_object_outlined),
-                ),
-                const MindooIndexStatus(),
               ],
             ),
           ),
           Expanded(
             child: MindooRichTextEditor(
-              key: ValueKey(widget.initialParams.noteId),
+              key: ValueKey(state.noteId),
               initialDocument: state.document,
               onDocumentChanged: viewModel.onDocumentChanged,
             ),

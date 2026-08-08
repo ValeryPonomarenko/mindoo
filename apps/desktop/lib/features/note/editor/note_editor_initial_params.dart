@@ -1,15 +1,9 @@
-import 'package:design_system/design_system.dart';
+import 'package:core/core.dart';
 
 class NoteEditorInitialParams {
-  const NoteEditorInitialParams({
-    this.noteId,
-    this.title = '',
-    this.document,
-  });
+  const NoteEditorInitialParams({this.note});
 
-  final String? noteId;
-  final String title;
-  final RichTextDocument? document;
+  final Note? note;
 
   static NoteEditorInitialParams fromRouteExtra(Object? extra) =>
       extra is NoteEditorInitialParams

@@ -1,65 +1,60 @@
+import 'dart:async';
+
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
-import 'package:flutter/foundation.dart';
 
-import 'note_editor_initial_params.dart';
 import 'note_editor_presentation_view_state.dart';
 
 class NoteEditorViewModel extends AppCubit<NoteEditorViewState> {
   NoteEditorViewModel(
     super.initialState,
-    this._initialParams,
-    this._modelController,
-    this._embeddingPipeline,
+    this._saveNote,
+    this._startNoteEmbedding,
   );
 
-  final NoteEditorInitialParams _initialParams;
-  final EmbeddingModelController _modelController;
-  final TextEmbeddingPipeline _embeddingPipeline;
+  final SaveNoteUseCase _saveNote;
+  final StartNoteEmbeddingUseCase _startNoteEmbedding;
+
+  Timer? _saveDebounce;
+  Future<void> _saveTail = Future.value();
 
   NoteEditorPresentationViewState get _model =>
       state as NoteEditorPresentationViewState;
 
-  void onTitleChanged(String title) => emit(_model.copyWith(title: title));
+  @override
+  void onClose() {
+    _saveDebounce?.cancel();
+    _queueSave();
+    unawaited(_startEmbeddingAfterSave());
+    super.onClose();
+  }
 
-  void onDocumentChanged(RichTextDocument document) =>
-      emit(_model.copyWith(document: document));
+  void onTitleChanged(String title) {
+    emit(_model.copyWith(title: title));
+    _scheduleSave();
+  }
 
-  /// Temporary development action for validating on-device embeddings.
-  Future<void> printEmbedding() async {
-    await _modelController.refresh();
-    if (_modelController.state is! ModelReady) {
-      debugPrint(
-        'Embedding model is not installed. Install it in Settings first.',
-      );
-      return;
-    }
+  void onDocumentChanged(RichTextDocument document) {
+    emit(_model.copyWith(document: document));
+    _scheduleSave();
+  }
 
-    final content = [
-      _model.title,
-      _model.document?.plainText ?? '',
-    ].where((part) => part.trim().isNotEmpty).join('\n').trim();
-    if (content.isEmpty) {
-      debugPrint('Cannot embed an empty note.');
-      return;
-    }
+  void _scheduleSave() {
+    _saveDebounce?.cancel();
+    _saveDebounce = Timer(const Duration(milliseconds: 350), _queueSave);
+  }
 
+  void _queueSave() {
+    final draft = _model.noteDraft;
+    _saveTail = _saveTail.then((_) => _saveNote.execute(draft));
+  }
+
+  Future<void> _startEmbeddingAfterSave() async {
     try {
-      final embeddedChunks = await _embeddingPipeline.embedDocument(
-        EmbeddingDocument(
-          id: _initialParams.noteId ?? 'temporary-note',
-          text: content,
-        ),
-      );
-      for (final embeddedChunk in embeddedChunks) {
-        debugPrint(
-          'Embedding chunk ${embeddedChunk.chunk.index} '
-          '(${embeddedChunk.embedding.dimensions} dimensions): '
-          '${embeddedChunk.embedding.values.join(', ')}',
-        );
-      }
-    } catch (error, stackTrace) {
-      debugPrint('Embedding failed: $error\n$stackTrace');
+      await _saveTail;
+    } catch (_) {
+      return;
     }
+    await _startNoteEmbedding.execute(_model.noteDraft);
   }
 }

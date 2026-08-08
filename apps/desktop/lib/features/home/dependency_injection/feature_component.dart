@@ -11,6 +11,10 @@ void configureDependencies() {
       (initialParams, _) => HomePresentationViewState.initial(initialParams),
     )
     ..registerFactoryParam<HomeViewModel, HomeInitialParams, dynamic>(
-      (initialParams, _) => HomeViewModel(getIt(param1: initialParams)),
+      (initialParams, _) => HomeViewModel(
+        getIt(param1: initialParams),
+        getIt(),
+        getIt(),
+      ),
     );
 }

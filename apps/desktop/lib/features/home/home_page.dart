@@ -3,6 +3,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../note/editor/note_editor_initial_params.dart';
 import 'home_initial_params.dart';
 import 'home_presentation_view_state.dart';
 import 'home_view_model.dart';
@@ -36,16 +37,21 @@ class _HomePageState extends State<HomePage>
               builder: (context, constraints) => Wrap(
                 spacing: 16,
                 runSpacing: 16,
-                children: _notes
+                children: state.notes
                     .map(
                       (note) => SizedBox(
                         width: (constraints.maxWidth - 32) / 3,
                         height: 180,
                         child: MindooNotePreview(
-                          title: note.$1,
-                          preview: note.$2,
-                          date: note.$3,
-                          onTap: () => context.push('/note/editor'),
+                          title: note.title.isEmpty
+                              ? 'Untitled note'
+                              : note.title,
+                          preview: note.plainText,
+                          date: _formatUpdatedAt(note.updatedAt),
+                          onTap: () => context.push(
+                            '/note/editor',
+                            extra: NoteEditorInitialParams(note: note),
+                          ),
                         ),
                       ),
                     )
@@ -54,7 +60,11 @@ class _HomePageState extends State<HomePage>
             ),
           ],
         ),
-        const Positioned(top: 16, right: 24, child: MindooIndexStatus()),
+        Positioned(
+          top: 16,
+          right: 24,
+          child: MindooIndexStatus(indexing: state.isEmbedding),
+        ),
         Positioned(
           right: 40,
           bottom: 32,
@@ -68,8 +78,23 @@ class _HomePageState extends State<HomePage>
   );
 }
 
-const _notes = [
-  ('Project notes', 'Capture ideas, decisions, and next steps.', 'Today'),
-  ('Reading list', 'Articles to revisit this week.', 'Aug 3'),
-  ('Product direction', 'A few thoughts for the next iteration.', 'Aug 1'),
-];
+String _formatUpdatedAt(DateTime value) {
+  final now = DateTime.now();
+  if (DateUtils.isSameDay(value, now)) return 'Today';
+
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  return '${months[value.month - 1]} ${value.day}';
+}

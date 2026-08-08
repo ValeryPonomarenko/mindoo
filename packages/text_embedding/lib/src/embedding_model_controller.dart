@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'embedding_model_state.dart';
+import 'models/embedding_model_state.dart';
 
 /// Installs and reports the lifecycle of an embedding model.
 ///

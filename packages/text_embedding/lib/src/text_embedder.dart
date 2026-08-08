@@ -1,4 +1,4 @@
-import 'embedding.dart';
+import 'models/embedding.dart';
 
 /// Encodes already prepared text into dense vectors using one embedding model.
 abstract interface class TextEmbedder {

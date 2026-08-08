@@ -1,13 +1,25 @@
+import 'dart:io';
+
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:go_router/go_router.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'dependency_injection/app_component.dart';
 
-void main() {
-  configureDependencies();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final appSupportDirectory = await getApplicationSupportDirectory();
+  final objectBoxDirectory = Directory(
+    '${appSupportDirectory.path}/objectbox',
+  );
+  await objectBoxDirectory.create(recursive: true);
+  await configureDependencies(
+    objectBoxDirectory: objectBoxDirectory.path,
+    objectBoxMacosApplicationGroup: 'group.space.mindoo',
+  );
   runApp(const MindooDesktopApp());
 }
 
@@ -43,7 +55,8 @@ class _MindooDesktopAppState extends State<MindooDesktopApp> {
             title: MindooAppInfo.name,
             theme: theme,
             routerConfig: getIt<GoRouter>(),
-            localizationsDelegates: FlutterQuillLocalizations.localizationsDelegates,
+            localizationsDelegates:
+                FlutterQuillLocalizations.localizationsDelegates,
             supportedLocales: FlutterQuillLocalizations.supportedLocales,
             builder: (context, child) => MindooWorkspaceTheme(
               seedColor: _workspaceTheme.seedColor,

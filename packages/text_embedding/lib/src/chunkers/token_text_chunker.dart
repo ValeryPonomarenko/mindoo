@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:math' as math;
 
-import '../chunking_options.dart';
-import '../embedding_document.dart';
+import '../models/chunking_options.dart';
+import '../models/embedding_document.dart';
 import 'text_chunk.dart';
 import 'text_chunker.dart';
 import 'text_tokenizer.dart';

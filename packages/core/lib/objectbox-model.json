@@ -1,0 +1,113 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:1263717187244816682",
+      "lastPropertyId": "7:3296291359876481196",
+      "name": "StoredNote",
+      "properties": [
+        {
+          "id": "1:2840491330308959798",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:312931372490475511",
+          "name": "noteId",
+          "indexId": "1:4879092151745861505",
+          "type": 9,
+          "flags": 2080
+        },
+        {
+          "id": "3:524106142814477352",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:2557549316923174071",
+          "name": "documentJson",
+          "type": 9
+        },
+        {
+          "id": "5:4033183989061230220",
+          "name": "embeddingSource",
+          "type": 9
+        },
+        {
+          "id": "6:6998276725603652842",
+          "name": "updatedAt",
+          "type": 10
+        },
+        {
+          "id": "7:3296291359876481196",
+          "name": "plainText",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:4186995508668126837",
+      "lastPropertyId": "7:4762273194121288374",
+      "name": "StoredNoteEmbedding",
+      "properties": [
+        {
+          "id": "1:2352486992191841314",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5029210552855732642",
+          "name": "noteId",
+          "indexId": "2:3000254756351905869",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "StoredNote"
+        },
+        {
+          "id": "3:6874910458756855977",
+          "name": "chunkIndex",
+          "type": 6
+        },
+        {
+          "id": "4:8196451998237003967",
+          "name": "text",
+          "type": 9
+        },
+        {
+          "id": "5:6912427937512124675",
+          "name": "startByteOffset",
+          "type": 6
+        },
+        {
+          "id": "6:2681624716870229748",
+          "name": "endByteOffset",
+          "type": 6
+        },
+        {
+          "id": "7:4762273194121288374",
+          "name": "vector",
+          "indexId": "3:5687299010586127968",
+          "type": 28,
+          "flags": 8
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:4186995508668126837",
+  "lastIndexId": "3:5687299010586127968",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

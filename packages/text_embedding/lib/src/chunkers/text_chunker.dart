@@ -1,5 +1,5 @@
-import '../chunking_options.dart';
-import '../embedding_document.dart';
+import '../models/chunking_options.dart';
+import '../models/embedding_document.dart';
 import 'text_chunk.dart';
 
 /// Splits documents into chunks that fit an embedding model's token budget.

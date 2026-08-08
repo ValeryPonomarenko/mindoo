@@ -1,5 +1,5 @@
 import '../chunkers/text_chunk.dart';
-import '../embedding.dart';
+import '../models/embedding.dart';
 
 /// A source chunk paired with the vector generated for it.
 class EmbeddedChunk {
